@@ -203,9 +203,33 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  throw new Error('Not implemented');
+  let rectangle = '';
+  const newWidth = width - 2;
+  const newHeight = height - 1;
+  for (let h = 0; h < newHeight + 1; h += 1) {
+    for (let w = 0; w < newWidth + 1; w += 1) {
+      if (h === 0 && w === 0) {
+        rectangle += '┌';
+      } if (h === 0 && w === newWidth) {
+        rectangle += '┐\n';
+      } if (h === newHeight && w === 0) {
+        rectangle += '└';
+      } if (h === newHeight && w === newWidth) {
+        rectangle += '┘\n';
+      } if ((h === 0 || h === newHeight) && w < newWidth) {
+        rectangle += '─';
+      } if (h > 0 && h < newHeight && w === 0) {
+        rectangle += '│';
+      } if (h > 0 && h < newHeight && w === newWidth) {
+        rectangle += ' │\n';
+      }
+      if (w > 0 && w < newWidth && h > 0 && h < newHeight) {
+        rectangle += ' ';
+      }
+    }
+  }
+  return rectangle;
 }
-
 
 /**
  * Encode specified string with ROT13 cipher
@@ -223,8 +247,27 @@ function getRectangleString(width, height) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const alphabet1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'];
+  const alphabet2 = ['n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  let encodedString = '';
+  const letters = str.split('');
+  for (let i = 0; i < letters.length; i += 1) {
+    const letter = letters[i];
+    let oppositeLetter;
+    if (alphabet1.includes(letter.toLowerCase())) {
+      oppositeLetter = alphabet2[alphabet1.indexOf(letter.toLowerCase())];
+      encodedString += letter === letter.toUpperCase()
+        ? oppositeLetter.toUpperCase() : oppositeLetter.toLowerCase();
+    } else if (alphabet2.includes(letter.toLowerCase())) {
+      oppositeLetter = alphabet1[alphabet2.indexOf(letter.toLowerCase())];
+      encodedString += letter === letter.toUpperCase()
+        ? oppositeLetter.toUpperCase() : oppositeLetter.toLowerCase();
+    } else {
+      encodedString += letter;
+    }
+  }
+  return encodedString;
 }
 
 /**
@@ -240,8 +283,13 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (value === undefined || value === null || value.length === 0) {
+    return false;
+  } if (value.toUpperCase === 'undefined') {
+    return false;
+  }
+  return true;
 }
 
 
@@ -269,8 +317,22 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const trimmedValue = value.replace(/♣|♦|♥|♠/g, '');
+  let cardId = 0;
+  if (trimmedValue === 'Q') {
+    cardId = 50;
+  } else if (trimmedValue === 'K') {
+    cardId = 51;
+  } else if (trimmedValue === 'A') {
+    cardId = 0;
+  } else if (trimmedValue >= 2 && trimmedValue <= 10) {
+    cardId = trimmedValue - 1;
+  } else if (trimmedValue === 'J') {
+    cardId = 10;
+  }
+  return cardId;
+  // return trimmedValue;
 }
 
 
