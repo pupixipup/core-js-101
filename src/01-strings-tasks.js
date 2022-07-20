@@ -318,20 +318,13 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  const trimmedValue = value.replace(/♣|♦|♥|♠/g, '');
-  let cardId = 0;
-  if (trimmedValue === 'Q') {
-    cardId = 50;
-  } else if (trimmedValue === 'K') {
-    cardId = 51;
-  } else if (trimmedValue === 'A') {
-    cardId = 0;
-  } else if (trimmedValue >= 2 && trimmedValue <= 10) {
-    cardId = trimmedValue - 1;
-  } else if (trimmedValue === 'J') {
-    cardId = 10;
-  }
-  return cardId;
+  const deck = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+  return deck.indexOf(value);
   // return trimmedValue;
 }
 
