@@ -54,8 +54,8 @@ function willYouMarryMe(isPositiveAnswer) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array);
 }
 
 /**
@@ -77,8 +77,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
 }
 
 /**
@@ -98,8 +98,18 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+async function chainPromises(array, action) {
+  const promiseValues = [];
+  for (let i = 0; i < array.length; i += 1) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      promiseValues.push(await array[i]);
+    } catch (e) {
+      promiseValues.push();
+    }
+  }
+  const mappedValues = promiseValues.reduce((prev, el) => action(prev, el));
+  return mappedValues;
 }
 
 module.exports = {
