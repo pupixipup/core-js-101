@@ -289,11 +289,12 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-  const cnnArray = ccn.toString().split('');
-  let index = 1;
-  if (cnnArray.length % 2 !== 0) {
-    index = 0;
-  }
+  return ccn;
+  // const cnnArray = ccn.toString().split('');
+  // let index = 1;
+  // if (cnnArray.length % 2 !== 0) {
+  //   index = 0;
+  // }
 }
 
 /**
